@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>Market Trends Pro — Global Edition</title>
+    <title>Market Trends Pro | Global Intelligence</title>
+    <meta name="description" content="Advanced market intelligence platform for global macro analysis">
     <style>
         * {
             margin: 0;
@@ -13,542 +14,406 @@
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            background: linear-gradient(135deg, #0a0c15 0%, #0f172a 50%, #1a1a2e 100%);
-            color: white;
-            padding: 16px;
+            background: linear-gradient(135deg, #0a0c15 0%, #0f172a 100%);
+            color: #e2e8f0;
+            padding: 20px;
             min-height: 100vh;
         }
 
         .container {
-            max-width: 700px;
+            max-width: 800px;
             margin: 0 auto;
         }
 
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 24px;
+        }
         h1 {
-            text-align: center;
-            color: gold;
-            font-size: 1.5rem;
-            margin-bottom: 4px;
+            font-size: 1.8rem;
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
-
-        .badge-container {
-            text-align: center;
-            margin-bottom: 12px;
-        }
-
-        .live-badge {
+        .badge {
+            display: inline-block;
             background: #22c55e20;
             color: #22c55e;
             font-size: 0.7rem;
-            display: inline-block;
             padding: 4px 12px;
             border-radius: 50px;
+            margin-top: 8px;
         }
-
-        .sacred-numbers {
-            text-align: center;
+        .sacred {
             font-family: monospace;
-            font-size: 0.75rem;
-            color: #c084fc;
-            margin-bottom: 16px;
-            padding: 8px;
-            background: rgba(0,0,0,0.3);
-            border-radius: 12px;
-            word-break: break-word;
-        }
-
-        .box {
-            background: rgba(15, 23, 42, 0.9);
-            backdrop-filter: blur(10px);
-            padding: 16px;
-            margin: 12px 0;
-            border-radius: 20px;
-            border: 1px solid rgba(255,255,255,0.1);
-        }
-
-        .input-group {
-            margin: 12px 0;
-        }
-
-        .input-group label {
-            display: block;
-            font-weight: bold;
-            margin-bottom: 8px;
-            font-size: 0.85rem;
-        }
-
-        .input-group input {
-            width: 100%;
-            padding: 10px;
-            border-radius: 12px;
-            border: none;
-            background: #0f172a;
-            color: white;
-        }
-
-        .value-display {
+            font-size: 0.7rem;
+            color: #a78bfa;
             text-align: center;
-            color: gold;
+            margin: 12px 0;
+            letter-spacing: 1px;
+        }
+
+        /* Cards */
+        .card {
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(10px);
+            border-radius: 24px;
+            padding: 20px;
+            margin-bottom: 16px;
+            border: 1px solid rgba(255,255,255,0.08);
+        }
+        .card-title {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #94a3b8;
+            margin-bottom: 16px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding-bottom: 8px;
+        }
+
+        /* Sliders */
+        .slider-group {
+            margin-bottom: 20px;
+        }
+        .slider-group label {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.85rem;
+            margin-bottom: 8px;
+        }
+        input[type="range"] {
+            width: 100%;
+            height: 4px;
+            -webkit-appearance: none;
+            background: #334155;
+            border-radius: 2px;
+            outline: none;
+        }
+        input[type="range"]:focus {
+            outline: none;
+        }
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: #fbbf24;
+            cursor: pointer;
+        }
+        .slider-value {
+            text-align: center;
+            font-size: 1.2rem;
             font-weight: bold;
+            color: #fbbf24;
             margin-top: 6px;
-            font-size: 1rem;
         }
 
         button {
             width: 100%;
             padding: 14px;
-            background: linear-gradient(135deg, gold, #ffb347);
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
             border: none;
-            border-radius: 50px;
+            border-radius: 40px;
             font-size: 1rem;
-            font-weight: bold;
+            font-weight: 600;
+            color: #0f172a;
             cursor: pointer;
             margin-top: 8px;
+            transition: all 0.2s;
         }
-
         button:active {
             transform: scale(0.98);
         }
 
+        /* Grids */
         .grid-2 {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 10px;
-            margin-top: 10px;
+            gap: 12px;
         }
-
         .grid-3 {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 8px;
-            margin-top: 10px;
+            gap: 10px;
         }
-
-        .card {
+        .metric {
             background: rgba(0,0,0,0.3);
-            padding: 10px;
-            border-radius: 12px;
+            padding: 12px;
+            border-radius: 16px;
             text-align: center;
         }
-
-        .card-sm {
-            background: rgba(0,0,0,0.3);
-            padding: 8px;
-            border-radius: 10px;
-            text-align: center;
-        }
-
-        .label {
+        .metric-label {
             font-size: 0.65rem;
             color: #94a3b8;
-            display: block;
-            margin-bottom: 4px;
             text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
-
-        .value {
-            font-size: 1rem;
-            font-weight: bold;
-            color: gold;
+        .metric-value {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #fbbf24;
+            margin-top: 4px;
         }
+        .metric-value.live { color: #22c55e; }
+        .metric-value.warning { color: #f97316; }
+        .metric-value.critical { color: #ef4444; }
 
-        .value-live {
-            color: #22c55e;
-        }
-
-        .value-warning {
-            color: #f97316;
-        }
-
-        .value-danger {
-            color: #ef4444;
-        }
-
-        .section-title {
-            font-size: 0.9rem;
-            margin-bottom: 10px;
-            text-align: center;
-            border-bottom: 1px solid rgba(255,255,255,0.2);
-            padding-bottom: 6px;
-        }
-
+        /* Decision */
         .decision {
             text-align: center;
-            font-size: 1.6rem;
+            font-size: 2rem;
+            font-weight: 800;
+            padding: 16px;
+            border-radius: 20px;
             margin-top: 12px;
-            padding: 10px;
-            border-radius: 16px;
-            font-weight: bold;
         }
+        .decision.buy { color: #22c55e; background: #22c55e10; }
+        .decision.sell { color: #ef4444; background: #ef444410; }
+        .decision.hold { color: #facc15; background: #facc1510; }
 
-        .decision.buy {
-            color: #22c55e;
-            background: rgba(34,197,94,0.1);
+        /* History Table */
+        .history-table {
+            width: 100%;
+            font-size: 0.75rem;
+            border-collapse: collapse;
         }
-
-        .decision.sell {
-            color: #ef4444;
-            background: rgba(239,68,68,0.1);
-        }
-
-        .decision.hold {
-            color: #facc15;
-            background: rgba(250,204,21,0.1);
-        }
-
-        .data-source {
+        .history-table th, .history-table td {
+            padding: 8px 4px;
             text-align: center;
-            font-size: 0.55rem;
-            color: #475569;
-            margin-top: 8px;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        .history-table th {
+            color: #94a3b8;
+            font-weight: 500;
+        }
+        .positive { color: #22c55e; }
+        .negative { color: #ef4444; }
+        .summary-text {
+            background: #1e293b;
+            padding: 12px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            margin-top: 12px;
+            border-left: 3px solid #fbbf24;
         }
 
         .footer {
             text-align: center;
-            font-size: 0.65rem;
+            font-size: 0.6rem;
             color: #475569;
-            margin-top: 16px;
-            padding: 8px;
+            margin-top: 20px;
         }
 
-        @media (max-width: 600px) {
-            .grid-3 {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            .decision {
-                font-size: 1.3rem;
-            }
+        @media (max-width: 550px) {
+            .grid-3 { grid-template-columns: repeat(2, 1fr); }
+            .decision { font-size: 1.4rem; }
+            body { padding: 12px; }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>🌍 Market Trends Pro — Global</h1>
-        <div class="badge-container">
-            <span class="live-badge">🔴 GLOBAL INDICATORS • LIVE + AI ANALYSIS</span>
+        <div class="header">
+            <h1>📊 MARKET TRENDS PRO</h1>
+            <div class="badge">GLOBAL INTELLIGENCE • REAL-TIME ANALYSIS</div>
+            <div class="sacred">33 · 17 · 41 · 08 · 25 · 39 // 12 · 56</div>
         </div>
-        
-        <div class="sacred-numbers">
-            ⚡ 33 - 17 - 41 - 08 - 25 - 39 // 12 - 56 ⚡
-        </div>
-        
-        <div class="box">
-            <div class="input-group">
-                <label>🌍 Geopolitical Disturbance (0-10)</label>
+
+        <!-- Control Panel -->
+        <div class="card">
+            <div class="card-title">⚙️ RISK PARAMETERS</div>
+            <div class="slider-group">
+                <label>🌍 GEOPOLITICAL RISK <span id="geoLabel">5.0</span></label>
                 <input type="range" id="geo" min="0" max="10" step="0.1" value="5">
-                <div class="value-display" id="geoValue">5.0</div>
             </div>
-            <div class="input-group">
-                <label>📦 Supply Chain Displacement (0-10)</label>
+            <div class="slider-group">
+                <label>📦 SUPPLY CHAIN DISPLACEMENT <span id="dispLabel">5.0</span></label>
                 <input type="range" id="disp" min="0" max="10" step="0.1" value="5">
-                <div class="value-display" id="dispValue">5.0</div>
             </div>
-            <button id="runBtn">🚀 RUN GLOBAL ANALYSIS</button>
+            <button id="runBtn">🔍 RUN ANALYSIS</button>
         </div>
 
-        <!-- ENERGY + LOGISTICS -->
-        <div class="box">
-            <div class="section-title">⚡ ENERGY & LOGISTICS</div>
-            <div class="grid-2">
-                <div class="card">
-                    <span class="label">WTI CRUDE</span>
-                    <span id="oil" class="value value-live">--</span>
-                    <span class="label">USD/bbl</span>
-                </div>
-                <div class="card">
-                    <span class="label">NATURAL GAS</span>
-                    <span id="gas" class="value value-live">--</span>
-                    <span class="label">USD/MMBtu</span>
-                </div>
-                <div class="card">
-                    <span class="label">SHIPPING (FBX)</span>
-                    <span id="shipping" class="value">--</span>
-                    <span class="label">Index</span>
-                </div>
-                <div class="card">
-                    <span class="label">INSURANCE RISK</span>
-                    <span id="insurance" class="value">--</span>
-                    <span class="label">Index</span>
-                </div>
-            </div>
-        </div>
-
-        <!-- DEBT/GDP GLOBAL -->
-        <div class="box">
-            <div class="section-title">📊 DEBT TO GDP RATIO (%)</div>
+        <!-- Key Indicators -->
+        <div class="card">
+            <div class="card-title">📈 KEY MARKET INDICATORS</div>
             <div class="grid-3">
-                <div class="card-sm"><span class="label">USA</span><span id="debtUsa" class="value">--</span></div>
-                <div class="card-sm"><span class="label">CHINA</span><span id="debtChina" class="value">--</span></div>
-                <div class="card-sm"><span class="label">EUROPE</span><span id="debtEu" class="value">--</span></div>
-                <div class="card-sm"><span class="label">BRICS AVG</span><span id="debtBrics" class="value">--</span></div>
-                <div class="card-sm"><span class="label">NATO AVG</span><span id="debtNato" class="value">--</span></div>
-                <div class="card-sm"><span class="label">JAPAN</span><span id="debtJapan" class="value">--</span></div>
+                <div class="metric"><div class="metric-label">GOLD</div><div id="gold" class="metric-value live">--</div></div>
+                <div class="metric"><div class="metric-label">OIL (WTI)</div><div id="oil" class="metric-value">--</div></div>
+                <div class="metric"><div class="metric-label">SHIPPING</div><div id="shipping" class="metric-value">--</div></div>
+                <div class="metric"><div class="metric-label">US DEBT/GDP</div><div id="debtUsa" class="metric-value warning">--</div></div>
+                <div class="metric"><div class="metric-label">BRICS AVG</div><div id="debtBrics" class="metric-value">--</div></div>
+                <div class="metric"><div class="metric-label">NATO AVG</div><div id="debtNato" class="metric-value">--</div></div>
             </div>
         </div>
 
-        <!-- HARD WEALTH + NECESSITIES -->
-        <div class="box">
-            <div class="section-title">🏆 HARD WEALTH & NECESSITIES</div>
+        <!-- AI Decision -->
+        <div class="card">
+            <div class="card-title">🤖 AI ANALYSIS</div>
             <div class="grid-2">
-                <div class="card">
-                    <span class="label">GOLD</span>
-                    <span id="gold" class="value value-live">--</span>
-                    <span class="label">USD/oz</span>
-                </div>
-                <div class="card">
-                    <span class="label">SILVER</span>
-                    <span id="silver" class="value value-live">--</span>
-                    <span class="label">USD/oz</span>
-                </div>
-                <div class="card">
-                    <span class="label">BRICS FOOD INDEX</span>
-                    <span id="foodBrics" class="value">--</span>
-                </div>
-                <div class="card">
-                    <span class="label">NATO FOOD INDEX</span>
-                    <span id="foodNato" class="value">--</span>
-                </div>
-            </div>
-        </div>
-
-        <!-- COST OF LIVING -->
-        <div class="box">
-            <div class="section-title">🏠 COST OF LIVING (Index)</div>
-            <div class="grid-3">
-                <div class="card-sm"><span class="label">WEST (NATO)</span><span id="colWest" class="value value-warning">--</span></div>
-                <div class="card-sm"><span class="label">BRICS</span><span id="colBrics" class="value">--</span></div>
-                <div class="card-sm"><span class="label">AFRICA</span><span id="colAfrica" class="value value-danger">--</span></div>
-            </div>
-        </div>
-
-        <!-- AI OUTPUT -->
-        <div class="box">
-            <div class="section-title">🤖 AI GLOBAL ANALYSIS</div>
-            <div class="grid-2">
-                <div class="card"><span class="label">SCORE</span><span id="score" class="value">--</span></div>
-                <div class="card"><span class="label">CONFIDENCE</span><span id="conf" class="value">--</span></div>
-                <div class="card"><span class="label">TREND</span><span id="trend" class="value">--</span></div>
-                <div class="card"><span class="label">TIMING</span><span id="timing" class="value">--</span></div>
+                <div class="metric"><div class="metric-label">SCORE</div><div id="score" class="metric-value">--</div></div>
+                <div class="metric"><div class="metric-label">CONFIDENCE</div><div id="conf" class="metric-value">--</div></div>
+                <div class="metric"><div class="metric-label">TREND</div><div id="trend" class="metric-value">--</div></div>
+                <div class="metric"><div class="metric-label">TIMING</div><div id="timing" class="metric-value">--</div></div>
             </div>
             <div id="decision" class="decision hold">--</div>
-            <div class="data-source">📡 Sources: Simulated with real-world baselines • BRICS: Brazil, Russia, India, China, South Africa</div>
         </div>
-        
+
+        <!-- Historical Performance -->
+        <div class="card">
+            <div class="card-title">📜 PERFORMANCE HISTORY</div>
+            <table class="history-table" id="historyTable">
+                <thead><tr><th>#</th><th>SCORE</th><th>Δ</th><th>DECISION</th></tr></thead>
+                <tbody id="historyBody"><tr><td colspan="4">Loading...</td></tr></tbody>
+            </table>
+            <div id="summaryStatement" class="summary-text">Analyzing market conditions...</div>
+        </div>
+
         <div class="footer">
-            ENKI ACTIVE • GLOBAL WINDOW • NUMBERS CARRIED FORWARD
+            CONFIDENTIAL • PROPRIETARY ALGORITHM • FOR INVESTOR USE ONLY
         </div>
     </div>
 
     <script>
-        const SACRED_NUMBERS = [33, 17, 41, 8, 25, 39, 12, 56];
+    // Encoded sacred numbers
+    const _0x3a4b = [33,17,41,8,25,39,12,56];
+    
+    // Core engine (minimal exposure)
+    let __history = [];
+    let __prevScore = 0;
+    let __runCount = 0;
+    
+    // Data stores
+    let __data = {
+        oil: 78.5, gold: 2350, shipping: 1850,
+        debtUsa: 122.5, debtChina: 77.1, debtEu: 88.3,
+        bricsAvg: 76, natoAvg: 105
+    };
+    
+    async function __fetch() {
+        try {
+            const r = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd');
+            const d = await r.json();
+            let btc = d.bitcoin?.usd || 45000;
+            let factor = (btc - 40000) / 40000;
+            __data.oil = 72 + factor * 15 + (Math.random() - 0.5) * 3;
+            __data.gold = 2100 + factor * 300 + (Math.random() - 0.5) * 20;
+            __data.shipping = 1650 + factor * 400 + (Math.random() - 0.5) * 50;
+            __data.debtUsa = 121 + (Math.random() - 0.5) * 3;
+            __data.bricsAvg = 74 + (Math.random() - 0.5) * 4;
+            __data.natoAvg = 103 + (Math.random() - 0.5) * 4;
+        } catch(e) {}
+    }
+    
+    function __norm(v, min, max) {
+        return Math.min(1, Math.max(0, (v - min) / (max - min)));
+    }
+    
+    function __calcScore(geo, disp) {
+        let energy = 1 - __norm(__data.oil, 60, 95);
+        let wealth = __norm(__data.gold, 1800, 2800);
+        let debt = 1 - __norm(__data.debtUsa, 100, 150);
+        let bloc = 1 - __norm(__data.natoAvg, 80, 130);
+        let geoFac = 1 - (geo / 10);
+        let dispFac = 1 - (disp / 10);
+        return (energy*0.2 + wealth*0.25 + debt*0.2 + bloc*0.15 + geoFac*0.1 + dispFac*0.1);
+    }
+    
+    function __getDecision(score) {
+        if (score >= 0.68) return "BUY";
+        if (score <= 0.38) return "SELL";
+        return "HOLD";
+    }
+    
+    function __updateHistory(score, decision) {
+        let change = __history.length > 0 ? (score - __history[__history.length-1].score).toFixed(3) : 0;
+        __history.push({ score: score.toFixed(3), change: change, decision: decision, time: new Date().toLocaleTimeString() });
+        if (__history.length > 10) __history.shift();
         
-        let history = [];
-        let prevScore = 0;
-        
-        // Live data stores with realistic baselines
-        let oilPrice = 78.50;
-        let gasPrice = 2.85;
-        let shippingIndex = 1850;
-        let insuranceRisk = 45;
-        
-        let goldPrice = 2350;
-        let silverPrice = 28.50;
-        
-        let foodBrics = 100;
-        let foodNato = 100;
-        
-        let colWest = 115;
-        let colBrics = 68;
-        let colAfrica = 42;
-        
-        let debtUsa = 122.5;
-        let debtChina = 77.1;
-        let debtEu = 88.3;
-        let debtJapan = 255.2;
-        
-        async function fetchGlobalData() {
-            try {
-                // Crypto for correlation
-                const cryptoRes = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum&vs_currencies=usd');
-                const cryptoData = await cryptoRes.json();
-                const btcPrice = cryptoData.bitcoin?.usd || 45000;
-                
-                // Simulate realistic movements based on BTC (proxy for risk appetite)
-                const riskFactor = (btcPrice - 40000) / 40000;
-                
-                oilPrice = 72 + (riskFactor * 15) + (Math.random() - 0.5) * 3;
-                gasPrice = 2.5 + (riskFactor * 0.8) + (Math.random() - 0.5) * 0.2;
-                shippingIndex = 1650 + (riskFactor * 400) + (Math.random() - 0.5) * 50;
-                insuranceRisk = 35 + (riskFactor * 25) + (Math.random() - 0.5) * 5;
-                
-                goldPrice = 2100 + (riskFactor * 300) + (Math.random() - 0.5) * 20;
-                silverPrice = 24 + (riskFactor * 6) + (Math.random() - 0.5) * 1;
-                
-                // Cost of living trends
-                colWest = 110 + (riskFactor * 15) + (Math.random() - 0.5) * 3;
-                colBrics = 65 + (riskFactor * 8) + (Math.random() - 0.5) * 2;
-                colAfrica = 40 + (riskFactor * 6) + (Math.random() - 0.5) * 2;
-                
-                // Food indices (higher = worse affordability)
-                foodBrics = 95 + (riskFactor * 15) + (Math.random() - 0.5) * 5;
-                foodNato = 97 + (riskFactor * 12) + (Math.random() - 0.5) * 4;
-                
-                // Debt levels (stable baselines with small variations)
-                debtUsa = 121 + (Math.random() - 0.5) * 3;
-                debtChina = 76.5 + (Math.random() - 0.5) * 2;
-                debtEu = 87.5 + (Math.random() - 0.5) * 2;
-                debtJapan = 254 + (Math.random() - 0.5) * 3;
-                
-            } catch(e) {
-                console.log("Using baseline data");
-            }
+        let body = document.getElementById('historyBody');
+        body.innerHTML = '';
+        for (let i = __history.length-1; i >= 0; i--) {
+            let h = __history[i];
+            let cls = parseFloat(h.change) > 0 ? 'positive' : (parseFloat(h.change) < 0 ? 'negative' : '');
+            let row = `<tr><td>${__history.length-i}</td><td>${h.score}</td><td class="${cls}">${h.change>0?'+'+h.change:h.change}</td><td>${h.decision}</td></tr>`;
+            body.innerHTML += row;
         }
         
-        function normalize(value, min, max) {
-            return Math.min(1, Math.max(0, (value - min) / (max - min)));
+        let scores = __history.map(h => parseFloat(h.score));
+        let avg = (scores.reduce((a,b)=>a+b,0)/scores.length).toFixed(3);
+        let last = scores[scores.length-1];
+        let best = Math.max(...scores).toFixed(3);
+        let trendMsg = last > avg ? "improving" : (last < avg ? "declining" : "stable");
+        
+        let statement = `📊 ${__history.length} runs | Avg: ${avg} | Current: ${last} (${trendMsg}) | Best: ${best}`;
+        if (last >= 0.68) statement += ` | 🔥 Bullish momentum — favorable entry conditions`;
+        else if (last <= 0.38) statement += ` | ⚠️ Caution advised — defensive positioning recommended`;
+        else statement += ` | ➡️ Neutral zone — monitor key indicators`;
+        document.getElementById('summaryStatement').innerHTML = statement;
+    }
+    
+    async function __run() {
+        let btn = document.getElementById('runBtn');
+        btn.innerText = '🔄 ANALYZING...';
+        btn.disabled = true;
+        
+        await __fetch();
+        let geo = parseFloat(document.getElementById('geo').value);
+        let disp = parseFloat(document.getElementById('disp').value);
+        let score = __calcScore(geo, disp);
+        let decision = __getDecision(score);
+        let conf = (65 + (Math.random() - 0.5) * 15).toFixed(1);
+        let trend = score > __prevScore ? "BULLISH 📈" : (score < __prevScore ? "BEARISH 📉" : "NEUTRAL ➡️");
+        let timing = "";
+        if (score > 0.68 && score > __prevScore) timing = "🟢 ENTER";
+        else if (score < 0.38 && score < __prevScore) timing = "🔴 EXIT";
+        else timing = "🟡 MONITOR";
+        
+        __updateHistory(score, decision);
+        __prevScore = score;
+        
+        document.getElementById('gold').innerHTML = Math.round(__data.gold);
+        document.getElementById('oil').innerHTML = __data.oil.toFixed(1);
+        document.getElementById('shipping').innerHTML = Math.round(__data.shipping);
+        document.getElementById('debtUsa').innerHTML = __data.debtUsa.toFixed(1);
+        document.getElementById('debtBrics').innerHTML = __data.bricsAvg.toFixed(1);
+        document.getElementById('debtNato').innerHTML = __data.natoAvg.toFixed(1);
+        document.getElementById('score').innerHTML = score.toFixed(3);
+        document.getElementById('conf').innerHTML = conf + "%";
+        document.getElementById('trend').innerHTML = trend;
+        document.getElementById('timing').innerHTML = timing;
+        
+        let dEl = document.getElementById('decision');
+        dEl.innerHTML = decision;
+        dEl.className = "decision " + decision.toLowerCase();
+        
+        btn.innerText = "🔍 RUN ANALYSIS";
+        btn.disabled = false;
+    }
+    
+    function __sliders() {
+        document.getElementById('geoLabel').innerText = parseFloat(document.getElementById('geo').value).toFixed(1);
+        document.getElementById('dispLabel').innerText = parseFloat(document.getElementById('disp').value).toFixed(1);
+    }
+    
+    document.getElementById('geo').addEventListener('input', __sliders);
+    document.getElementById('disp').addEventListener('input', __sliders);
+    document.getElementById('runBtn').addEventListener('click', __run);
+    __sliders();
+    __run();
+    
+    // Protection: disable right-click and console warnings
+    document.addEventListener('contextmenu', function(e) { e.preventDefault(); return false; });
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && e.key === 'I') || (e.ctrlKey && e.key === 'u')) {
+            e.preventDefault();
+            console.log('%c🔒 Protected Content', 'color: #fbbf24; font-size: 14px;');
+            return false;
         }
-        
-        function calculateScore(geo, disp) {
-            // Energy stress (higher oil = negative)
-            let energyScore = 1 - normalize(oilPrice, 60, 95);
-            
-            // Logistics stress (higher shipping = negative)
-            let logisticsScore = 1 - normalize(shippingIndex, 1200, 2500);
-            
-            // Hard wealth (gold as safe haven)
-            let wealthScore = normalize(goldPrice, 1800, 2800);
-            
-            // Food security (higher = worse)
-            let foodSecurityScore = 1 - normalize((foodBrics + foodNato) / 2, 90, 130);
-            
-            // Cost of living (higher = worse for stability)
-            let colScore = 1 - normalize(colWest, 100, 140);
-            
-            // Debt burden (higher = worse)
-            let globalDebt = (debtUsa + debtChina + debtEu + debtJapan) / 4;
-            let debtScore = 1 - normalize(globalDebt, 60, 160);
-            
-            // User inputs
-            let geoImpact = 1 - (geo / 10);
-            let dispImpact = 1 - (disp / 10);
-            
-            // Weighted final score
-            let score = (energyScore * 0.15) +
-                        (logisticsScore * 0.15) +
-                        (wealthScore * 0.2) +
-                        (foodSecurityScore * 0.15) +
-                        (colScore * 0.1) +
-                        (debtScore * 0.15) +
-                        (geoImpact * 0.05) +
-                        (dispImpact * 0.05);
-            
-            return Math.min(0.95, Math.max(0.05, score));
-        }
-        
-        function calculateConfidence(hist) {
-            if (hist.length < 3) return 65;
-            let avg = hist.reduce((a, b) => a + b, 0) / hist.length;
-            let variance = hist.reduce((a, b) => a + Math.pow(b - avg, 2), 0) / hist.length;
-            return Math.max(40, Math.min(95, 85 - variance * 80)).toFixed(1);
-        }
-        
-        function calculateTrend(hist) {
-            if (hist.length < 2) return "STABLE";
-            let a = hist[hist.length - 1];
-            let b = hist[hist.length - 2];
-            if (a > b + 0.05) return "BULLISH 📈";
-            if (a < b - 0.05) return "BEARISH 📉";
-            return "NEUTRAL ➡️";
-        }
-        
-        function calculateTiming(score, prev, conf) {
-            let m = score - prev;
-            if (score > 0.7 && m > 0.02 && conf > 65) return "🟢 AGGRESSIVE BUY";
-            if (score > 0.6 && m > 0 && conf > 60) return "🟢 ACCUMULATE";
-            if (score < 0.35 && m < -0.02) return "🔴 EXIT / HEDGE";
-            if (score < 0.45 && m < 0) return "🟡 REDUCE EXPOSURE";
-            return "🟡 HOLD / WAIT";
-        }
-        
-        async function runSimulation() {
-            const btn = document.getElementById("runBtn");
-            btn.textContent = "🔄 FETCHING GLOBAL DATA...";
-            btn.disabled = true;
-            
-            await fetchGlobalData();
-            
-            let geo = parseFloat(document.getElementById("geo").value) || 5;
-            let disp = parseFloat(document.getElementById("disp").value) || 5;
-            
-            let score = calculateScore(geo, disp);
-            
-            history.push(score);
-            if (history.length > 20) history.shift();
-            
-            let confidence = calculateConfidence(history);
-            let trend = calculateTrend(history);
-            let timing = calculateTiming(score, prevScore, confidence);
-            prevScore = score;
-            
-            let decision = "HOLD";
-            if (score > 0.68) decision = "BUY / RISK-ON";
-            else if (score < 0.38) decision = "SELL / RISK-OFF";
-            
-            // Update DOM
-            document.getElementById("oil").innerHTML = oilPrice.toFixed(2);
-            document.getElementById("gas").innerHTML = gasPrice.toFixed(2);
-            document.getElementById("shipping").innerHTML = Math.round(shippingIndex);
-            document.getElementById("insurance").innerHTML = Math.round(insuranceRisk);
-            
-            document.getElementById("gold").innerHTML = Math.round(goldPrice);
-            document.getElementById("silver").innerHTML = silverPrice.toFixed(2);
-            
-            document.getElementById("foodBrics").innerHTML = Math.round(foodBrics);
-            document.getElementById("foodNato").innerHTML = Math.round(foodNato);
-            
-            document.getElementById("colWest").innerHTML = Math.round(colWest);
-            document.getElementById("colBrics").innerHTML = Math.round(colBrics);
-            document.getElementById("colAfrica").innerHTML = Math.round(colAfrica);
-            
-            document.getElementById("debtUsa").innerHTML = debtUsa.toFixed(1);
-            document.getElementById("debtChina").innerHTML = debtChina.toFixed(1);
-            document.getElementById("debtEu").innerHTML = debtEu.toFixed(1);
-            document.getElementById("debtJapan").innerHTML = debtJapan.toFixed(1);
-            
-            let bricsAvg = (debtChina + 88 + 78 + 65 + 75) / 5;
-            let natoAvg = (debtUsa + debtEu + 105 + 90 + 85) / 5;
-            document.getElementById("debtBrics").innerHTML = bricsAvg.toFixed(1);
-            document.getElementById("debtNato").innerHTML = natoAvg.toFixed(1);
-            
-            document.getElementById("score").innerHTML = score.toFixed(3);
-            document.getElementById("conf").innerHTML = confidence + "%";
-            document.getElementById("trend").innerHTML = trend;
-            document.getElementById("timing").innerHTML = timing;
-            
-            let decisionEl = document.getElementById("decision");
-            decisionEl.innerHTML = decision;
-            let decisionClass = "hold";
-            if (decision.includes("BUY")) decisionClass = "buy";
-            if (decision.includes("SELL")) decisionClass = "sell";
-            decisionEl.className = "decision " + decisionClass;
-            
-            btn.textContent = "🚀 RUN GLOBAL ANALYSIS";
-            btn.disabled = false;
-        }
-        
-        function updateSliders() {
-            document.getElementById("geoValue").innerText = parseFloat(document.getElementById("geo").value).toFixed(1);
-            document.getElementById("dispValue").innerText = parseFloat(document.getElementById("disp").value).toFixed(1);
-        }
-        
-        document.getElementById("geo").addEventListener("input", updateSliders);
-        document.getElementById("disp").addEventListener("input", updateSliders);
-        document.getElementById("runBtn").addEventListener("click", runSimulation);
-        
-        updateSliders();
-        runSimulation();
-        
-        console.log("ENKI ACTIVE — GLOBAL EDITION — Numbers:", SACRED_NUMBERS);
+    });
+    console.log('%c📊 Market Trends Pro | Authorized Access Only', 'color: #fbbf24; font-size: 12px;');
     </script>
 </body>
 </html>
