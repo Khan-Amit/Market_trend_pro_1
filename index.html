@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Market Trends Pro 1</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+            color: white;
+            padding: 16px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            color: gold;
+            font-size: 1.6rem;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #94a3b8;
+            font-size: 0.8rem;
+            margin-bottom: 16px;
+        }
+
+        .sacred-numbers {
+            text-align: center;
+            font-family: monospace;
+            font-size: 0.9rem;
+            color: #c084fc;
+            margin-bottom: 20px;
+            padding: 10px;
+            background: rgba(0,0,0,0.3);
+            border-radius: 12px;
+            letter-spacing: 1px;
+            word-break: break-word;
+        }
+
+        .box {
+            background: rgba(30, 41, 59, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 20px;
+            margin: 16px 0;
+            border-radius: 20px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .input-group {
+            margin: 15px 0;
+        }
+
+        .input-group label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 12px;
+            border-radius: 12px;
+            border: none;
+            background: #0f172a;
+            color: white;
+            font-size: 1rem;
+        }
+
+        .input-group input[type="range"] {
+            padding: 0;
+        }
+
+        .value-display {
+            text-align: center;
+            color: gold;
+            font-weight: bold;
+            margin-top: 8px;
+            font-size: 1.2rem;
+        }
+
+        button {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, gold, #ffb347);
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: all 0.2s ease;
+        }
+
+        button:active {
+            transform: scale(0.98);
+        }
+
+        .market-grid, .ai-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-top: 12px;
+        }
+
+        .market-item, .ai-item {
+            background: rgba(0,0,0,0.3);
+            padding: 12px;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .label {
+            font-size: 0.7rem;
+            color: #94a3b8;
+            display: block;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .value {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: gold;
+            word-break: break-word;
+        }
+
+        .unit {
+            font-size: 0.65rem;
+            color: #64748b;
+            margin-left: 4px;
+        }
+
+        .decision {
+            text-align: center;
+            font-size: 1.8rem;
+            margin-top: 15px;
+            padding: 12px;
+            border-radius: 16px;
+            font-weight: bold;
+        }
+
+        .decision.buy {
+            color: #22c55e;
+            background: rgba(34,197,94,0.1);
+        }
+
+        .decision.sell {
+            color: #ef4444;
+            background: rgba(239,68,68,0.1);
+        }
+
+        .decision.hold {
+            color: #facc15;
+            background: rgba(250,204,21,0.1);
+        }
+
+        h3 {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .footer {
+            text-align: center;
+            font-size: 0.7rem;
+            color: #475569;
+            margin-top: 20px;
+            padding: 10px;
+        }
+
+        @media (max-width: 480px) {
+            .market-grid, .ai-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 1.3rem;
+            }
+            
+            .decision {
+                font-size: 1.4rem;
+            }
+            
+            .box {
+                padding: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📈 Market Trends Pro 1</h1>
+        <p class="subtitle">GitHub Pages Edition</p>
+        
+        <div class="sacred-numbers">
+            ⚡ 33 - 17 - 41 - 08 - 25 - 39 // 12 - 56 ⚡
+        </div>
+        
+        <div class="box">
+            <div class="input-group">
+                <label>🌍 Geo Risk (0-10)</label>
+                <input type="range" id="geo" min="0" max="10" step="0.1" value="5">
+                <div class="value-display" id="geoValue">5.0</div>
+            </div>
+            <div class="input-group">
+                <label>📊 Displacement (0-10)</label>
+                <input type="range" id="disp" min="0" max="10" step="0.1" value="5">
+                <div class="value-display" id="dispValue">5.0</div>
+            </div>
+            <button id="runBtn">🚀 RUN SIMULATION</button>
+        </div>
+        
+        <div class="box">
+            <h3>📊 MARKET DATA</h3>
+            <div class="market-grid">
+                <div class="market-item">
+                    <span class="label">GOLD</span>
+                    <span id="gold" class="value">--</span>
+                    <span class="unit">USD/oz</span>
+                </div>
+                <div class="market-item">
+                    <span class="label">BITCOIN</span>
+                    <span id="btc" class="value">--</span>
+                    <span class="unit">USD</span>
+                </div>
+                <div class="market-item">
+                    <span class="label">ETHEREUM</span>
+                    <span id="eth" class="value">--</span>
+                    <span class="unit">USD</span>
+                </div>
+                <div class="market-item">
+                    <span class="label">DEBT/GDP</span>
+                    <span id="debt" class="value">--</span>
+                    <span class="unit">%</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="box">
+            <h3>🤖 AI ANALYSIS</h3>
+            <div class="ai-grid">
+                <div class="ai-item">
+                    <span class="label">SCORE</span>
+                    <span id="score" class="value">--</span>
+                </div>
+                <div class="ai-item">
+                    <span class="label">CONFIDENCE</span>
+                    <span id="conf" class="value">--</span>
+                </div>
+                <div class="ai-item">
+                    <span class="label">TREND</span>
+                    <span id="trend" class="value">--</span>
+                </div>
+                <div class="ai-item">
+                    <span class="label">TIMING</span>
+                    <span id="timing" class="value">--</span>
+                </div>
+            </div>
+            <div id="decision" class="decision hold">--</div>
+        </div>
+        
+        <div class="footer">
+            ENKI ACTIVE • WINDOWS FRESH • NUMBERS CARRIED FORWARD
+        </div>
+    </div>
+
+    <script>
+        // Sacred numbers carried forward
+        const SACRED_NUMBERS = [33, 17, 41, 8, 25, 39, 12, 56];
+        
+        let history = [];
+        let prevScore = 0;
+        
+        function getRandom(base, vol) {
+            return base + (Math.random() - 0.5) * vol;
+        }
+        
+        function normalize(value, min, max) {
+            return (value - min) / (max - min);
+        }
+        
+        function calculateConfidence(hist) {
+            if (hist.length < 3) return 50;
+            let avg = hist.reduce((a, b) => a + b, 0) / hist.length;
+            let variance = hist.reduce((a, b) => a + Math.pow(b - avg, 2), 0) / hist.length;
+            return Math.max(10, 100 - variance * 200).toFixed(1);
+        }
+        
+        function calculateTrend(hist) {
+            if (hist.length < 2) return "FLAT";
+            let a = hist[hist.length - 1];
+            let b = hist[hist.length - 2];
+            if (a > b) return "UP 📈";
+            if (a < b) return "DOWN 📉";
+            return "SIDEWAYS";
+        }
+        
+        function calculateTiming(score, prev, conf) {
+            let m = score - prev;
+            if (score > 0.65 && m > 0 && conf > 60) return "🟢 ENTER BUY";
+            if (score < 0.4 && m < 0) return "🔴 EXIT SELL";
+            return "🟡 WAIT";
+        }
+        
+        function runSimulation() {
+            let gold = getRandom(2000, 50);
+            let btc = getRandom(40000, 500);
+            let eth = getRandom(2000, 50);
+            let debt = getRandom(3, 0.05);
+            
+            let geo = parseFloat(document.getElementById("geo").value) || 5;
+            let disp = parseFloat(document.getElementById("disp").value) || 5;
+            
+            let score = 0.4 * normalize(gold, 1500, 2500) +
+                        0.2 * normalize(btc, 20000, 80000) +
+                        0.2 * normalize(eth, 1000, 5000) +
+                        0.1 * (geo / 10) +
+                        0.1 * (disp / 10);
+            
+            history.push(score);
+            if (history.length > 20) history.shift();
+            
+            let confidence = calculateConfidence(history);
+            let trend = calculateTrend(history);
+            let timing = calculateTiming(score, prevScore, confidence);
+            prevScore = score;
+            
+            let decision = "HOLD";
+            if (score > 0.7) decision = "BUY";
+            else if (score < 0.4) decision = "SELL";
+            
+            document.getElementById("gold").innerText = gold.toFixed(2);
+            document.getElementById("btc").innerText = btc.toFixed(0);
+            document.getElementById("eth").innerText = eth.toFixed(0);
+            document.getElementById("debt").innerText = debt.toFixed(2);
+            document.getElementById("score").innerText = score.toFixed(3);
+            document.getElementById("conf").innerText = confidence + "%";
+            document.getElementById("trend").innerText = trend;
+            document.getElementById("timing").innerText = timing;
+            
+            let decisionEl = document.getElementById("decision");
+            decisionEl.innerText = decision;
+            decisionEl.className = "decision " + decision.toLowerCase();
+        }
+        
+        function updateSliders() {
+            document.getElementById("geoValue").innerText = parseFloat(document.getElementById("geo").value).toFixed(1);
+            document.getElementById("dispValue").innerText = parseFloat(document.getElementById("disp").value).toFixed(1);
+        }
+        
+        document.getElementById("geo").addEventListener("input", updateSliders);
+        document.getElementById("disp").addEventListener("input", updateSliders);
+        document.getElementById("runBtn").addEventListener("click", runSimulation);
+        
+        updateSliders();
+        runSimulation();
+        
+        console.log("ENKI ACTIVE — Windows Fresh — Numbers:", SACRED_NUMBERS);
+    </script>
+</body>
+</html>
