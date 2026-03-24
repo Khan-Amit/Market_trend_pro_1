@@ -185,7 +185,8 @@
 
     <div style="overflow-x: auto;">
         <table class="history-table">
-            <thead><tr><th>#</th><th>SCORE</th><th>Δ</th><th>DECISION</th></tr></thead>
+            <thead>股市<th>#</th><th>SCORE</th><th>Δ</th><th>DECISION</th></tr>
+            </thead>
             <tbody id="historyBody"></tbody>
         </table>
     </div>
@@ -195,7 +196,7 @@
 <script>
     // -------- BASE MARKET DATA (realistic ranges) --------
     let baseIndicators = {
-        gold: 3025.0,      // central market price
+        gold: 3025.0,      // updated to current market price
         oil: 84.2,
         shipping: 1950,
         usDebt: 121.9,
@@ -211,7 +212,7 @@
 
     // -------- helper: gold variation (keeps within ±1.5% of base) --------
     function varyGold() {
-        let variation = (Math.random() - 0.5) * 0.025;  // ±1.25% drift
+        let variation = (Math.random() - 0.5) * 0.03;  // ±1.5% drift
         let newGold = baseIndicators.gold * (1 + variation);
         // clamp to realistic band
         newGold = Math.min(baseIndicators.gold * 1.02, Math.max(baseIndicators.gold * 0.98, newGold));
@@ -300,7 +301,12 @@
         const tbody = document.getElementById('historyBody');
         tbody.innerHTML = '';
         [...history].reverse().forEach(rec => {
-            let row = `<tr><td>${rec.run}</td><td>${rec.score.toFixed(3)}</td><td>${rec.delta > 0 ? '+' : ''}${rec.delta.toFixed(3)}</td><td>${rec.decision}</td></tr>`;
+            let row = `<tr>
+                        <td>${rec.run}</td>
+                        <td>${rec.score.toFixed(3)}</td>
+                        <td>${rec.delta > 0 ? '+' : ''}${rec.delta.toFixed(3)}</td>
+                        <td>${rec.decision}</td>
+                       </tr>`;
             tbody.innerHTML += row;
         });
 
