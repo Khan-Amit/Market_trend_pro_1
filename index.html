@@ -6,9 +6,9 @@
     <title>📊 MARKET TRENDS PRO</title>
     <style>
         * {
-            box-sizing: border-box;
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
         }
         body {
             background: #0a0f1e;
@@ -35,7 +35,7 @@
             color: #8f9bb5;
             font-size: 0.85rem;
         }
-        .risk-panel, .ai-card, .slider-panel {
+        .slider-panel, .risk-panel, .ai-card {
             background: #101624;
             border-radius: 28px;
             padding: 20px;
@@ -155,7 +155,7 @@
         <div style="font-family: monospace; margin-top: 8px;">33 · 17 · 41 · 08 · 25 · 39 // 12 · 56</div>
     </div>
 
-    <!-- SLIDER PANEL (Risk Bar) -->
+    <!-- Risk Slider -->
     <div class="slider-panel">
         <label>⚙️ RISK TOLERANCE <span id="riskLabel" style="float:right;">NEUTRAL</span></label>
         <input type="range" id="riskSlider" min="0" max="100" value="50">
@@ -163,11 +163,13 @@
         <div style="font-size:0.75rem; margin-top: 8px;">⬅️ Conservative | Aggressive ➡️</div>
     </div>
 
+    <!-- Indicators -->
     <div class="risk-panel">
         <div class="indicators-grid" id="indicatorsGrid"></div>
     </div>
 
-    <div class="ai-card" id="aiCard">
+    <!-- AI Analysis -->
+    <div class="ai-card">
         <div class="score-row">
             <span>🤖 AI ANALYSIS</span>
             <span id="confidenceVal">—</span>
@@ -183,10 +185,10 @@
         <button id="resetGoldBtn">⟳ Reset Gold Price</button>
     </div>
 
+    <!-- History Table -->
     <div style="overflow-x: auto;">
         <table class="history-table">
-            <thead>股市<th>#</th><th>SCORE</th><th>Δ</th><th>DECISION</th></tr>
-            </thead>
+            <thead><tr><th>#</th><th>SCORE</th><th>Δ</th><th>DECISION</th></tr></thead>
             <tbody id="historyBody"></tbody>
         </table>
     </div>
@@ -194,9 +196,9 @@
 </div>
 
 <script>
-    // -------- BASE MARKET DATA (realistic ranges) --------
-    let baseIndicators = {
-        gold: 3025.0,      // updated to current market price
+    // ----- BASE MARKET DATA -----
+    const BASE = {
+        gold: 3025.0,
         oil: 84.2,
         shipping: 1950,
         usDebt: 121.9,
@@ -204,22 +206,19 @@
         natoAvg: 104.0
     };
 
-    // current working values (will drift slightly)
-    let current = { ...baseIndicators };
-
-    let riskFactor = 0.5;      // 0 = conservative, 1 = aggressive
+    let current = { ...BASE };
+    let riskFactor = 0.5;
     let history = [];
 
-    // -------- helper: gold variation (keeps within ±1.5% of base) --------
+    // Gold drifts ±1.5% from BASE
     function varyGold() {
-        let variation = (Math.random() - 0.5) * 0.03;  // ±1.5% drift
-        let newGold = baseIndicators.gold * (1 + variation);
-        // clamp to realistic band
-        newGold = Math.min(baseIndicators.gold * 1.02, Math.max(baseIndicators.gold * 0.98, newGold));
+        let variation = (Math.random() - 0.5) * 0.03;
+        let newGold = BASE.gold * (1 + variation);
+        newGold = Math.min(BASE.gold * 1.02, Math.max(BASE.gold * 0.98, newGold));
         return parseFloat(newGold.toFixed(1));
     }
 
-    // update other indicators with tiny drifts
+    // Other indicators drift slightly
     function driftMarkets() {
         current.gold = varyGold();
         current.oil = parseFloat((current.oil + (Math.random() - 0.5) * 0.6).toFixed(1));
@@ -227,7 +226,8 @@
         current.usDebt = parseFloat((current.usDebt + (Math.random() - 0.5) * 0.3).toFixed(1));
         current.bricsAvg = parseFloat((current.bricsAvg + (Math.random() - 0.5) * 0.2).toFixed(1));
         current.natoAvg = parseFloat((current.natoAvg + (Math.random() - 0.5) * 0.2).toFixed(1));
-        // boundaries
+
+        // Clamp to realistic bounds
         current.oil = Math.min(98, Math.max(70, current.oil));
         current.shipping = Math.min(2100, Math.max(1850, current.shipping));
         current.usDebt = Math.min(126, Math.max(118, current.usDebt));
@@ -235,8 +235,8 @@
         current.natoAvg = Math.min(110, Math.max(98, current.natoAvg));
     }
 
-    // -------- AI SCORE with risk slider influence --------
-    function computeTrendScore(data, risk) {
+    // AI Score calculation
+    function computeScore(data, risk) {
         let goldOilRatio = data.gold / data.oil;
         let debtFactor = Math.min(1.2, data.usDebt / 120.0);
         let shippingNorm = Math.min(1.2, data.shipping / 1900);
@@ -248,13 +248,12 @@
                 + (shippingNorm - 0.85) * 0.20
                 + (bricsWeight - natoWeight + 0.15) * 0.20;
 
-        // risk adjustment: higher risk = slightly amplifies bullish/bearish signal
         let riskAdj = (raw - 0.5) * risk * 0.3;
         let score = Math.min(0.99, Math.max(0.01, raw + riskAdj));
         return Math.round(score * 1000) / 1000;
     }
 
-    function getTrendAndAction(score) {
+    function getAnalysis(score) {
         if (score >= 0.65) return { trend: "BULLISH 📈", action: "BUY / ACCUMULATE", timing: "🟢 ENTRY WINDOW", confidence: 85 };
         if (score >= 0.52) return { trend: "BULLISH 📈", action: "HOLD / ADD ON DIPS", timing: "🟡 OPPORTUNITY", confidence: 74 };
         if (score >= 0.44) return { trend: "NEUTRAL ⚖️", action: "HOLD / OBSERVE", timing: "🟡 MONITOR", confidence: 65 };
@@ -263,7 +262,7 @@
     }
 
     function updateUI() {
-        // update indicators grid
+        // Update indicators
         const grid = document.getElementById('indicatorsGrid');
         grid.innerHTML = '';
         const items = [
@@ -284,18 +283,19 @@
             grid.appendChild(card);
         });
 
-        let score = computeTrendScore(current, riskFactor);
-        let trendObj = getTrendAndAction(score);
+        // AI score & analysis
+        let score = computeScore(current, riskFactor);
+        let analysis = getAnalysis(score);
         document.getElementById('scoreVal').innerText = score.toFixed(3);
-        document.getElementById('trendLabel').innerHTML = trendObj.trend;
-        document.getElementById('timingMsg').innerHTML = trendObj.timing;
-        document.getElementById('actionText').innerHTML = trendObj.action;
-        document.getElementById('confidenceVal').innerHTML = `CONFIDENCE ${trendObj.confidence}%`;
+        document.getElementById('trendLabel').innerHTML = analysis.trend;
+        document.getElementById('timingMsg').innerHTML = analysis.timing;
+        document.getElementById('actionText').innerHTML = analysis.action;
+        document.getElementById('confidenceVal').innerHTML = `CONFIDENCE ${analysis.confidence}%`;
 
-        // history
+        // History
         let lastScore = history.length ? history[history.length-1].score : score;
         let delta = score - lastScore;
-        history.push({ run: history.length+1, score, delta, decision: trendObj.action.split(' ')[0] });
+        history.push({ run: history.length+1, score, delta, decision: analysis.action.split(' ')[0] });
         if (history.length > 12) history.shift();
 
         const tbody = document.getElementById('historyBody');
@@ -311,10 +311,10 @@
         });
 
         let avg = history.reduce((s, r) => s + r.score, 0) / history.length;
-        document.getElementById('footerNote').innerHTML = `📊 ${history.length} runs | Avg: ${avg.toFixed(3)} | Current: ${score.toFixed(3)} | Gold live range ±1.5% | Risk factor: ${riskFactor.toFixed(2)} | Data stays on device.`;
+        document.getElementById('footerNote').innerHTML = `📊 ${history.length} runs | Avg: ${avg.toFixed(3)} | Current: ${score.toFixed(3)} | Gold: ${current.gold.toFixed(1)} (live ±1.5%) | Risk: ${riskFactor.toFixed(2)} | Data stays local.`;
     }
 
-    // risk slider event
+    // --- Event Listeners ---
     const slider = document.getElementById('riskSlider');
     const riskValSpan = document.getElementById('riskValue');
     const riskLabelSpan = document.getElementById('riskLabel');
@@ -327,20 +327,19 @@
         updateUI();
     });
 
-    // reset gold to base market price
     document.getElementById('resetGoldBtn').addEventListener('click', () => {
-        current.gold = baseIndicators.gold;
+        current.gold = BASE.gold;
         updateUI();
     });
 
-    // live drift every 25 seconds
+    // --- Auto-drift every 25 seconds ---
     setInterval(() => {
         driftMarkets();
         updateUI();
     }, 25000);
 
-    // initial load
-    driftMarkets();   // small initial variety
+    // Initial load
+    driftMarkets();
     updateUI();
 </script>
 </body>
